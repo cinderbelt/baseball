@@ -1,5 +1,5 @@
 import random
-
+inning =1
 class playerclass():
     def __init__(self,name):
         self.score=0
@@ -30,7 +30,7 @@ class playerclass():
 def game(atk,defend):
     global outcounts
     global inning
-    inning =1
+
     outcounts =0
     strike=0
     ball=0
@@ -91,24 +91,25 @@ def game(atk,defend):
         if outcounts == 3:
             inning+=0.5
             print('three out change')
+            print('inning',inning)
 def main():
     playername=input('input your name')
     tb=input('top or bottom')
     player= playerclass(playername)
-    inning =1
+    global inning
     global com
     com=playerclass('com')
     if tb== 'top':
-       while inning <4:
+       while inning <4.0:
            game(player, com)
            game(com,player)
            if inning==3.5 and (player.score < com.score):
               print('com win')
               break
-           if (player.score > com.score) and inning ==4:
+           if (player.score > com.score) and inning ==4.0:
                print('player win')
                break
-           elif (player.score == com.score) and inning ==4:
+           elif (player.score == com.score) and inning ==4.0:
                print('draw')
                break
 
