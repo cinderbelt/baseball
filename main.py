@@ -43,10 +43,17 @@ def game(atk,defend):
         if atk.bat != 2:
             if defend.pitch != atk.bat:
                 strike+=1
-                print('strike'+str(strike))
+                print('call strike')
+                if strike !=3:
+                    if ball==0:
+                        print(str(strike)+'strike'+' '+'no ball')
+                    else:
+                        print(str(strike) + 'strike' + ' ' + str(ball) + 'ball')
             elif defend.pitch==0:
                 ball+=1
-                print(str(ball)+'ball')
+                print('ball')
+                if ball !=3:
+                    print(str(strike) + 'strike' + ' ' + str(ball) + 'ball')
 
             else:
                 if base != [1,1,1]:
@@ -55,14 +62,22 @@ def game(atk,defend):
                     ball=0
                     print('hit')
                     print(sum(base),'runner on base')
+                    if outcounts != 0:
+                        print(outcounts, 'out')
+                    else:
+                        print('no out')
 
                 else:
                     atk.score+=1
                     strike=0
                     ball=0
                     print('hit')
-                    print(atk.name+'score'+str(atk.score))
-                    print('full base')
+                    print('runner comes in and still full base')
+                    print(atk.name + ':' + str(atk.score) +' ' +defend.name + ':', defend.score)
+                    if outcounts != 0:
+                        print(outcounts, 'out')
+                    else:
+                        print('no out')
         else:
             if defend.pitch == 1:
                 if base != []:
@@ -71,19 +86,25 @@ def game(atk,defend):
                     atk.score += 1
                     base=[1]
                 print(sum(base),'runhomerun')
-                print(atk.name+'score'+str(atk.score))
+                print(atk.name + ':' + str(atk.score) + ' '+defend.name + ':', defend.score)
+                if outcounts != 0:
+                    print(outcounts, 'out, base unloaded')
+                else:
+                    print('no out, base unloaded')
                 base=[]
                 strike=0
                 ball=0
             else:
+                print('big swing and a miss! inning end!')
                 outcounts =3
 
-        if strike ==2:
+        if strike ==3:
             outcounts +=1
             strike=0
             ball =0
             print('strike out')
-            print(str(outcounts)+'out')
+            if outcounts != 3:
+                print(str(outcounts)+'out')
         if ball ==3:
             if base != [1,1,1]:
                 base.append(1)
@@ -91,22 +112,36 @@ def game(atk,defend):
                 strike =0
                 print('base on ball')
                 print(sum(base), 'runner on base')
+                if outcounts !=0:
+                    print(outcounts, 'out')
+                else:
+                    print('no out')
 
             else:
                 atk.score+=1
                 ball=0
                 strike =0
                 print('base on ball')
-
-                print(atk.name + 'score' + str(atk.score))
+                print('runner comes in and still full base')
+                print(atk.name + ':' + str(atk.score)+' ' +defend.name + ':',defend.score)
+                if outcounts !=0:
+                    print(outcounts, 'out')
+                else:
+                    print('no out')
 
         if outcounts == 3:
             inning+=0.5
-            print('three out change')
             if inning%1==0 and inning != 4:
+                print('three out change')
                 print('top of the',inning//1,'inning')
-            elif inning%1==0 and inning != 4:
+                print(atk.name + ':' + str(atk.score) + ' ' + defend.name + ':', defend.score)
+
+            elif inning%1!=0 and inning != 4:
+                print('three out change')
                 print('bottom of the',inning//1,'inning')
+                print(atk.name + ':' + str(atk.score) + ' ' + defend.name + ':', defend.score)
+
+
 def main():
     playername=input('input your name')
     tb=input('top or bottom')
