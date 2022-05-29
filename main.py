@@ -1,4 +1,6 @@
 import random
+import numpy as np
+
 inning =1
 class playerclass():
     def __init__(self,name):
@@ -47,20 +49,28 @@ def game(atk,defend):
                 print(str(ball)+'ball')
 
             else:
-                if base != [1,1,1,1]:
+                if base != [1,1,1]:
                     base.append(1)
+                    strike=0
+                    ball=0
                     print('hit')
+                    print(sum(base),'runner on base')
 
                 else:
                     atk.score+=1
-                    print(atk.name+'score'+atk.score)
+                    strike=0
+                    ball=0
+                    print('hit')
+                    print(atk.name+'score'+str(atk.score))
+                    print('full base')
         else:
             if defend.pitch == 1:
                 if base != []:
                     atk.score += sum(base)
                 else:
                     atk.score += 1
-                print('homerun')
+                    base=[1]
+                print(sum(base),'runhomerun')
                 print(atk.name+'score'+str(atk.score))
                 base=[]
                 strike=0
@@ -75,23 +85,28 @@ def game(atk,defend):
             print('strike out')
             print(str(outcounts)+'out')
         if ball ==3:
-            if base != [1,1,1,1]:
+            if base != [1,1,1]:
                 base.append(1)
                 ball=0
                 strike =0
                 print('base on ball')
+                print(sum(base), 'runner on base')
 
             else:
                 atk.score+=1
                 ball=0
                 strike =0
                 print('base on ball')
+
                 print(atk.name + 'score' + str(atk.score))
 
         if outcounts == 3:
             inning+=0.5
             print('three out change')
-            print('inning',inning)
+            if inning%1==0 and inning != 4:
+                print('top of the',inning//1,'inning')
+            elif inning%1==0 and inning != 4:
+                print('bottom of the',inning//1,'inning')
 def main():
     playername=input('input your name')
     tb=input('top or bottom')
