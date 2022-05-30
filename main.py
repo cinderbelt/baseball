@@ -1,4 +1,4 @@
-import random
+
 import numpy as np
 
 inning =1
@@ -10,7 +10,7 @@ class playerclass():
     def pitching(self):
         global pitch
         if self == com:
-            self.pitch= random.randint(0,1)
+            self.pitch= np.random.choice(2,1,p=[0.6,0.4])
         else:
             self.pitch = int(input('pitch'))
 
@@ -19,10 +19,10 @@ class playerclass():
         global bat
         if self == com:
             if outcounts != 2:
-                self.bat= random.randint(0,2)
+                self.bat= np.random.choice(3,1,p=[0.53,0.4,0.07])
 
             else:
-                self.bat= random.randint(0,1)
+                self.bat = np.random.choice(2, 1, p=[0.6, 0.4])
 
         else:
             self.bat= int(input('bat'))
@@ -43,8 +43,11 @@ def game(atk,defend):
         if atk.bat != 2:
             if defend.pitch != atk.bat:
                 strike+=1
-                print('call strike')
-                if strike !=3:
+                if defend.pitch ==1:
+                    print('call strike')
+                else:
+                    print('swing and a miss')
+                if strike !=2:
                     if ball==0:
                         print(str(strike)+'strike'+' '+'no ball')
                     else:
@@ -81,11 +84,11 @@ def game(atk,defend):
         else:
             if defend.pitch == 1:
                 if base != []:
-                    atk.score += sum(base)
+                    atk.score += sum(base)+1
                 else:
                     atk.score += 1
-                    base=[1]
-                print(sum(base),'runhomerun')
+                    base=[0]
+                print(sum(base)+1,'runhomerun')
                 print(atk.name + ':' + str(atk.score) + ' '+defend.name + ':', defend.score)
                 if outcounts != 0:
                     print(outcounts, 'out, base unloaded')
@@ -98,7 +101,7 @@ def game(atk,defend):
                 print('big swing and a miss! inning end!')
                 outcounts =3
 
-        if strike ==3:
+        if strike ==2:
             outcounts +=1
             strike=0
             ball =0
@@ -153,14 +156,17 @@ def main():
        while inning <4.0:
            game(player, com)
            game(com,player)
-           if inning==3.5 and (player.score < com.score):
+           if inning==4.0 and (player.score < com.score):
               print('com win')
+              print('player:', player.score, ' com:', com.score)
               break
            if (player.score > com.score) and inning ==4.0:
                print('player win')
+               print('player:', player.score, ' com:', com.score)
                break
            elif (player.score == com.score) and inning ==4.0:
                print('draw')
+               print('player:', player.score, ' com:', com.score)
                break
 
     if tb== 'bottom':
@@ -169,14 +175,17 @@ def main():
             game(player, com)
             if inning == 3.5 and (player.score > com.score):
                 print('player win')
+                print('player:',player.score,' com:',com.score)
                 break
 
             if (player.score < com.score) and inning ==4:
                 print('com win')
+                print('player:', player.score, ' com:', com.score)
                 break
 
             elif (player.score == com.score) and inning ==4:
                 print('draw')
+                print('player:', player.score, ' com:', com.score)
                 break
 
 main()
